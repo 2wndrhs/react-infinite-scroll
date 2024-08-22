@@ -11,7 +11,7 @@ interface InfiniteScrollOptions {
 }
 
 export interface PaginationParams {
-  page: number;
+  page?: number;
   size: number;
 }
 
