@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { PaginationResponse } from "../mocks/handlers";
-import { throttle } from "../utils/throttle";
+import { throttleByAnimationFrame } from "../utils/throttleByAnimationFrame";
 
 // [코드 5] Throttle 적용한 Custom Hook
 interface InfiniteScrollOptions {
@@ -43,7 +43,7 @@ export const useInfiniteScroll = <T>(
   }, [page]);
 
   useEffect(() => {
-    const handleScroll = throttle(() => {
+    const handleScroll = throttleByAnimationFrame(() => {
       const { scrollTop, offsetHeight } = document.documentElement;
       if (window.innerHeight + scrollTop + 100 >= offsetHeight) {
         console.log("fetching more users...");
