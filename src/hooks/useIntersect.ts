@@ -29,6 +29,8 @@ export const useIntersect = (
     const observer = new IntersectionObserver(callback, options);
     observer.observe(ref.current);
 
+    console.log("observing...");
+
     return () => observer.disconnect();
   }, [ref, options, callback]);
 

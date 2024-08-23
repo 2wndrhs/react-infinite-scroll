@@ -10,4 +10,5 @@ export const useFetchUsers = ({ size }: PaginationParams) =>
     getNextPageParam: ({ data: { isLastPage, pageNumber } }) => {
       return isLastPage ? undefined : pageNumber + 1;
     },
+    select: (data) => data.pages.flatMap(({ data }) => data.contents),
   });

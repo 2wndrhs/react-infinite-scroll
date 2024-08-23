@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import Card from "./components/Card";
 import Container from "./components/Container";
 import Target from "./components/Target";
@@ -9,27 +8,27 @@ import { useIntersect } from "./hooks/useIntersect";
 const PAGE_SIZE = 10;
 
 function App() {
-  const { data, hasNextPage, isFetching, fetchNextPage } = useFetchUsers({
+  const {
+    data: users,
+    hasNextPage,
+    isFetching,
+    fetchNextPage,
+  } = useFetchUsers({
     size: PAGE_SIZE,
   });
 
   const ref = useIntersect((entry, observer) => {
     observer.unobserve(entry.target);
+    console.log("unobserving...");
+
     if (hasNextPage && !isFetching) {
       fetchNextPage();
     }
   });
 
-  const users = useMemo(
-    () => (data ? data.pages.flatMap(({ data }) => data.contents) : []),
-    [data]
-  );
-
   return (
     <Container>
-      {users.map((user) => (
-        <Card key={user.id} name={user.name} />
-      ))}
+      {users && users.map((user) => <Card key={user.id} name={user.name} />)}
       {isFetching && <p>Loading more users...</p>}
       <Target ref={ref} />
     </Container>
